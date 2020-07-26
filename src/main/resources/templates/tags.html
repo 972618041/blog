@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>标签</title>
+    <!--    <link rel="stylesheet" href="static/css/semantic.min.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/public.css">
+    <meta name="referrer" content="no-referrer">
+</head>
+<body>
+
+<nav class="ui inverted attached segment p-padded-tb-mini m-shadow-small" >
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">Blog</h2>
+            <a href="#" th:href="@{/}" class="p-item item p-mobile-hide"><i class="mini home icon"></i>首页</a>
+            <a href="#" th:href="@{/types/-1}" class="p-item item p-mobile-hide"><i class="mini idea icon"></i>分类</a>
+            <a href="#" th:href="@{/tags/-1}" class="active p-item item p-mobile-hide"><i class="mini tags icon"></i>标签</a>
+            <a href="#" th:href="@{/archives}" class="p-item item p-mobile-hide"><i class="mini clone icon"></i>归档</a>
+            <a href="#" th:href="@{/about}" class="p-item item p-mobile-hide"><i class="mini info icon"></i>关于我</a>
+            <div class="right p-item item p-mobile-hide">
+                <form name="search" method="post" action="#" th:action="@{/search}" target="_blank">
+                    <div class="ui icon inverted transparent input">
+                        <label>
+                            <input th:value="${query}" type="text" name="query" placeholder="Search......">
+                        </label>
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a id="aaa" href="#" class="ui icon black button p-right-top p-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<div class="p-padded-tb-big p-container-small">
+    <div class="ui container">
+
+        <div class="ui top attached segment">
+            <div class="ui middle aligned two column grid">
+                <div class="column">
+                    <h3 class="ui teal header">标签</h3>
+                </div>
+                <div class="right aligned column">
+                    共<h3 class="ui orange header p-inline-block" th:text="${#arrays.length(tags)}"> 14 </h3>个
+                </div>
+            </div>
+        </div>
+
+        <div class="ui attached segment p-padded-tb-large">
+            <a th:classappend="${tag.id==active}?'teal'" th:href="@{/tags/{id}(id=${tag.id})}" th:each="tag:${tags}" href="#" class="ui large basic left pointing label p-margin-tb-tiny">
+                <span th:text="${tag.name}" class="ui basic">方法论</span>
+                <div th:text="${#arrays.length(tag.blogs)}"  class="detail ">12</div>
+            </a>
+        </div>
+        <div class="p-padded-tb-big p-container-small">
+            <div class="ui container">
+                <div class="ui top attached  teal segment">
+                    <div class="ui middle aligned mobile reversed stackable grid" th:each="blog:${page.content}">
+                        <div class="ui eleven wide column">
+                            <h3 class="ui header" ><a href="#" target="_blank" th:href="@{/blog/{id}(id=${blog.id})}" class="p-black" th:text="${blog.title}">你真的懂java吗</a></h3>
+                            <p class="p-text" th:text="${#strings.substring(#strings.trim(blog.content),0,#strings.length(#strings.trim(blog.content))>100?100:#strings.length(#strings.trim(blog.content)))}+...">刚学JAVA的人可以参考参考。
+                                时常看到一些人说掌握了Java,但是让他们用Java做一个实际的项目可能又困难重重。在这里,笔者根据自己的一点理解斗胆提出...</p>
+                            <div class="ui mini grid">
+                                <div class="row">
+                                    <div class="eleven wide column">
+                                        <div class="ui horizontal link list">
+                                            <div class="item">
+                                                <img th:src="${blog.user.avatar}" src="https://picsum.photos/80/80" alt="头像"
+                                                     class="ui avatar image"/>
+                                                <div class="content"><a th:text="${blog.user.nickname}" style="padding-bottom: 2px" href="#"
+                                                                        class="header">李金明</a></div>
+                                            </div>
+                                            <div class="item">
+                                                <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-7-12</span>
+                                            </div>
+                                            <div class="item">
+                                                <i class="eye icon"></i><span th:text="${blog.views}">202</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="five wide column right aligned">
+                                        <a href="#" th:href="@{/types/{id}(id=${blog.type.id})}" target="_blank" th:text="${blog.type.name}" class="ui teal mini basic label">认知升级</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <a href="#" th:href="@{/tags/{id}(id=${tag.id})}" th:each="tag:${blog.tags}" th:text="${tag.name}" th:classappend="${tag.id==active}?'teal'" class="ui basic left pointing label p-padded-tb-mini p-text-thin">方法论</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui five wide column">
+                            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                                <img th:src="${blog.firstPicture}" src="https://picsum.photos/id/1/800/450" alt="图片" class="ui rounded image">
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
+                    <div class="ui middle aligned two column grid">
+                        <div class="column">
+                            <a href="#" th:href="@{/admin/types(page=${page.number}-1)}" class="ui button teal basic mini" th:unless="${page.first}">上一页</a>
+                        </div>
+                        <div class="right aligned column">
+                            <a href="#" th:href="@{/admin/types(page=${page.number}+1)}" class="ui button teal basic mini" th:unless="${page.last}">下一页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="ui inverted vertical segment p-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img th:src="@{/images/ewm.png}" src="../static/images/ewm.png" class="ui rounded image" alt="二维码" style="width: 100px;height: 100px;">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header p-text-thin p-text-spaced p-text-opacty-min">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" target="_blank"  class="item" th:href="@{/blog/{id}(id=${blog.id})}"  th:each="blog,itemStat:${recommendBlogs}"  th:if="${itemStat.count}<=3" th:text="${blog.title}">用户故事(User Story)</a>
+                    <!--/*-->
+                    <a href="#" class="item">关于刻意练习的清单</a>
+                    <a href="#" class="item">失败要趁早</a>
+                    <!--*/-->
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header p-text-thin p-text-spaced p-text-opacty-min">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">qq:972618041</a>
+                    <a href="#" class="item">Email:972618041@qq.com</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header p-text-thin p-text-spaced p-text-opacty-min">关于</h4>
+                <p  class="p-text-thin p-text-spaced p-text-opacty-mini" style="margin-left: 30px;">这是我的个人博客,会分享关于编程,思考有关的任何内容,希望可以给到这里的人有所帮助</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="p-text-thin p-text-spaced p-text-opacty-mini">Copyright © 2020-2021个人博客</p>
+    </div>
+</footer>
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<!--<script src="static/js/semantic.min.js"></script>-->
+<script>
+    $('#aaa').click(function () {
+        $('.p-item').toggleClass('p-mobile-hide');
+    });
+    $('#payButton').popup({
+        popup:('.payQR.popup'),
+        on:'click',
+        position:'bottom center'
+    });
+</script>
+<script type="text/javascript" color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="../static/js/canvas-nest.min.js " th:src="@{/js/canvas-nest.min.js}"></script>
+</body>
+</html>

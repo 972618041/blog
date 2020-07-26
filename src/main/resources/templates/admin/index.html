@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>首页</title>
+    <!--    <link rel="stylesheet" href="static/css/semantic.min.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/public.css">
+</head>
+<body>
+
+<nav class="ui inverted attached segment p-padded-tb-mini m-shadow-small" >
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">管理后台</h2>
+            <a href="#" th:href="@{/admin/blogs}" class="p-item item p-mobile-hide"><i class="mini home icon"></i>博客</a>
+            <a href="#" th:href="@{/admin/types}" class="p-item item p-mobile-hide"><i class="mini idea icon"></i>分类</a>
+            <a href="#" th:href="@{/admin/tags}" class="p-item item p-mobile-hide"><i class="mini tags icon"></i>标签</a>
+            <div class="right p-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="https://picsum.photos/id/1/100/100" th:src="${session.user.avatar}" alt="" class="ui avatar image">
+                        <span th:text="${session.user.nickname}"></span>
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="aaa" href="#" class="ui icon black button p-right-top p-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<div class="p-padded-tb-big p-container-small">
+    <div class="ui container">
+        <div class="ui success large message ">
+            <h3>Hi</h3>
+            <span th:text="${session.user.nickname}">李金明</span>,欢迎登录!
+        </div>
+
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595417293434&di=493cfcc64117f4ddba17f228454f79c6&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2F26907a714dba917027156b2b5c033035.jpeg" alt="" class="ui rounded bordered fluid image">
+    </div>
+</div>
+
+<footer class="ui inverted vertical segment p-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img th:src="@{/images/ewm.png}" src="../../static/images/ewm.png" class="ui rounded image" alt="二维码" style="width: 100px;height: 100px;">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header p-text-thin p-text-spaced p-text-opacty-min">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事(User Story)</a>
+                    <a href="#" class="item">关于刻意练习的清单</a>
+                    <a href="#" class="item">失败要趁早</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header p-text-thin p-text-spaced p-text-opacty-min">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">qq:972618041</a>
+                    <a href="#" class="item">Email:972618041@qq.com</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header p-text-thin p-text-spaced p-text-opacty-min">关于</h4>
+                <p  class="p-text-thin p-text-spaced p-text-opacty-mini" style="margin-left: 30px;">这是我的个人博客,会分享关于编程,思考有关的任何内容,希望可以给到这里的人有所帮助</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="p-text-thin p-text-spaced p-text-opacty-mini">Copyright © 2020-2021个人博客</p>
+    </div>
+</footer>
+<script src="../../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<!--<script src="static/js/semantic.min.js"></script>-->
+<script>
+    $('.ui.dropdown').dropdown({
+        on:'hover'
+    })
+</script>
+<script type="text/javascript" color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="../../static/js/canvas-nest.min.js" th:src="@{/js/canvas-nest.min.js}"></script>
+</body>
+</html>
